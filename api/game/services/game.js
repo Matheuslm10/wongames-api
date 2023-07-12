@@ -7,6 +7,7 @@
 
 const axios = require("axios");
 const slugify = require("slugify");
+const qs = require("querystring");
 
 function CustomException(e) {
   return { e, data: e.data && e.data.errors && e.data.errors };
@@ -30,12 +31,7 @@ async function getGameInfo(slug) {
     const description = dom.window.document.querySelector(".description");
 
     return {
-      rating: ratingElement
-        ? ratingElement
-            .getAttribute("xlink:href")
-            .replace(/_/g, "")
-            .replace(/[^\w-]+/g, "")
-        : "FREE",
+      rating: "BR0",
       short_description: description.textContent.trim().slice(0, 160),
       description: description.innerHTML,
     };
@@ -164,7 +160,9 @@ async function createGames(products) {
 module.exports = {
     populate: async (params) => {
       try {
-        const gogApiUrl = `https://www.gog.com/games/ajax/filtered?mediaType=game&page=1&sort=popularity`;
+        const gogApiUrl = `https://www.gog.com/games/ajax/filtered?mediaType=game${qs.stringify(
+          params
+        )}`;
         const {
           data: { products },
         } = await axios.get(gogApiUrl);
