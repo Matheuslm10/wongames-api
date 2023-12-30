@@ -1,17 +1,15 @@
 module.exports = ({ env }) => ({
   email: {
-    provider: "nodemailer",
-    providerOptions: {
-      host: env("SMTP_HOST", "smtp-relay.sendinblue.com"),
-      port: env("SMTP_PORT", 587),
-      auth: {
-        user: env("SMTP_USERNAME"),
-        pass: env("SMTP_PASSWORD"),
+    config: {
+      provider: 'strapi-provider-email-brevo',
+      providerOptions: {
+        apiKey: env("SMTP_KEY"),
       },
-    },
-    settings: {
-      defaultFrom: "matheus_lm10@hotmail.com",
-      defaultReplyTo: "matheus_lm10@hotmail.com",
+      settings: {
+        defaultSenderEmail: 'wongames@ficticious-email.com',
+        defaultSenderName: 'Won Games (Ficticious)',
+        defaultReplyTo: 'wongames@ficticious-email.com',
+      },
     },
   },
   upload: {

@@ -2,7 +2,6 @@
 
 const stripe = require("stripe")(process.env.STRIPE_KEY);
 const { sanitizeEntity } = require("strapi-utils");
-const orderTemplate = require("../../../config/email-templates/order");
 
 module.exports = {
   createPaymentIntent: async (ctx) => {
