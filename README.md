@@ -37,6 +37,14 @@ https://github.com/Matheuslm10/wongames-client/assets/17602947/84a4daeb-7ff8-498
 
 ## :computer: How to run
 
+### Requirements
+
+This project uses [PostgreSQL](https://www.postgresql.org/), so, in order to make it working, install in your local machine or use Docker.
+
+The configuration to the Database can be found on [config/database.js](config/database.js)
+
+### Node.js Version
+
 The recommended Node.js version to use in this project is specified in the `.nvmrc` file, at the root directory.
 
 > [!NOTE]
@@ -45,6 +53,7 @@ The recommended Node.js version to use in this project is specified in the `.nvm
 > nvm use
 > ```
 
+### Running
 
 Clone the repository:
 ```
@@ -68,11 +77,58 @@ yarn develop
 
 Now you can access the server at `http://localhost:1337`.
 
-And the administration panel at `http://localhost:1337/admin`
+The administration panel at `http://localhost:1337/admin`.
 
-### Other Commands:
+And the GraphQL playground at `http://localhost:1337/graphql`.
+
+> [!IMPORTANT]
+> The first time to access the Admin you'll need to create an user.
+
+### Other Commands
 - `yarn build`: creates the production build version.
 - `yarn start`: starts a server with the build production code.
+
+### Populate data
+
+This project uses a `/games/populate` route in order to populate the data via GoG site.
+In order to make it work, follow the steps:
+
+- Go to Roles & Permissions > Public and make sure `game:populate` route is public available and the upload as well
+- With Strapi running run the following comand in your console:
+
+```bash
+$ curl -X POST http://localhost:1337/games/populate
+
+# you can pass query parameters like:
+$ curl -X POST http://localhost:1337/games/populate?page=2
+$ curl -X POST http://localhost:1337/games/populate?search=simcity
+$ curl -X POST http://localhost:1337/games/populate?sort=rating&price=free
+$ curl -X POST http://localhost:1337/games/populate?availability=coming&sort=popularity
+```
+
+### Using dump
+
+First of all, you need to download our [dump.sql](https://github.com/Matheuslm10/wongames-database/blob/master/dump.sql) from our [database repository](https://github.com/Matheuslm10/wongames-database).
+
+1. Create a Postgres database and user:
+
+```sh
+CREATE USER wongames WITH ENCRYPTED PASSWORD 'wongames123';
+CREATE DATABASE wongames OWNER wongames;
+```
+
+2. Populate the new database, using the following command (remember to point the place where you have the `dump.sql`):
+
+```sh
+psql -h localhost -p 5432 -U wongames wongames < dump.sql
+```
+
+And you can access `localhost:1337/admin` with the following credentials:
+
+```sh
+email: wongames@wongames.com
+password: Wongames123
+```
 
 ## :star2: Credits
 
