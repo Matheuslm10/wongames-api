@@ -10,8 +10,8 @@ module.exports = ({ env }) => ({
       },
     },
     settings: {
-      defaultFrom: "matheus_lm10@hotmail.com",
-      defaultReplyTo: "matheus_lm10@hotmail.com",
+      defaultFrom: "wongames@gmail.com",
+      defaultReplyTo: "contact@gmail.com",
     },
   },
   upload: {
